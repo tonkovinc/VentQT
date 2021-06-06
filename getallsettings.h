@@ -5,8 +5,6 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-
-
 class GetAllSettings : public ConnectClass
 {
 public:
@@ -54,12 +52,10 @@ public:
 
         QJsonObject root = doc.object();
         int count = 0;
-        //qDebug() << root.size();
-        //qDebug() << root.keys().at(0);
         QJsonValue roomGroupValue = root.value("roomGroup0");
         //qDebug() << roomGroupValue;
         QJsonObject roomGroupObj = roomGroupValue.toObject();
-        for (int j = 0; j < (roomGroupObj.size()-1); j++){
+        for (int j = 0; j < roomGroupObj.size(); j++){
             QJsonValue dayGroupValue = roomGroupObj.value(QString("dayGroup") + QString(QString::number(j)));
             QJsonObject dayGroupObj = dayGroupValue.toObject();
             for (int k = 0; k < dayGroupObj.size(); k++){
@@ -73,67 +69,6 @@ public:
             }
         }
         qDebug() << count;
-        //QJsonObject roomGroup0 = root[QString("roomGroup") + QString("0")];
-       /* if (root.success())
-        {
-            for (int j = 0; j < (roomGroup0.size() - 1); j++)
-            {
-                JsonObject& dayGroup0 = roomGroup0[String("dayGroup") + String(j)];
-                if (dayGroup0.success())
-                {
-                    for (int k = 0; k < (dayGroup0.size() - 1); k++)
-                    {
-                        JsonArray& days = dayGroup0["days"];
-                        if (days.success())
-                        {
-                            for (int q = 0; q < (days.size()); q++)
-                            {
-                                JsonObject& setting0 = dayGroup0[String("setting") + String(k)];
-                                if (setting0.success())
-                                {
-                                    //for ()
-
-                                    RoomStruct* Obj;//выделение памяти
-                                    if (RoomStructAmount == 0)
-                                    {
-                                        Obj = new RoomStruct[RoomStructAmount + 1];
-                                    }
-                                    else
-                                    {
-                                        RoomStruct* tempObj = new RoomStruct[RoomStructAmount + 1];
-                                        for (int r = 0; r < RoomStructAmount; r++)
-                                        {
-                                            tempObj[r] = OurRoomStruct[r]; // копируем во временный объект
-                                        }
-                                        delete [] Obj;
-                                        Obj = tempObj;
-                                    }
-                                    OurRoomStruct = Obj;
-                                    const char* time = setting0["time"];
-                                    char subHours[4] = {0,};
-                                    char subMin[4] = {0,};
-                                    subHours[0] = time[0];
-                                    subHours[1] = time[1];
-                                    subMin[0] = time[3];
-                                    subMin[1] = time[4];
-                                    OurRoomStruct[RoomStructAmount].timeStartRoom = dayGroup0["days"][q];// * 24 * 60 +  atoi(subHours) * 60 + atoi(subMin));
-                                    OurRoomStruct[RoomStructAmount].timeStartRoom = (OurRoomStruct[RoomStructAmount].timeStartRoom - 1) * 24 * 60 + atoi(subHours) * 60 + atoi(subMin);
-                                    OurRoomStruct[RoomStructAmount].id = RoomStructAmount;
-                                    OurRoomStruct[RoomStructAmount].tempRoom = setting0["temp"]; // 21
-                                    OurRoomStruct[RoomStructAmount].humRoom = setting0["hum"]; // 55
-                                    OurRoomStruct[RoomStructAmount].co2Room = setting0["co2"]; // 700
-                                    OurRoomStruct[RoomStructAmount].mute = setting0["mute"]; // 0
-                                    OurRoomStruct[RoomStructAmount].at_home = setting0["at_home"]; // 1
-                                    RoomStructAmount++;
-                                } else Serial.println("Parsing setting0!");
-                            }
-                        } else Serial.println("Parsing days!");
-                    }
-                } else Serial.println("Parsing dayGroup0!");
-            }
-        } else Serial.println("Parsing roomGroup0!");
-        RoomStructAmount--;*/
-
     }
 
 private:
